@@ -8,6 +8,7 @@ import Routes from './routes'
 import Navigation from './navigation'
 import AddVocabModal from './add-vocab-modal'
 import EditVocabModal from './edit-vocab-modal'
+import DeleteConfirmModal from './delete-confirm-modal'
 import '../style.scss'
 
 export default hot(({ store, firebase, rfConfig, history }) => (
@@ -23,6 +24,7 @@ export default hot(({ store, firebase, rfConfig, history }) => (
 
           <AddVocabModal />
           <EditVocabModal />
+          <DeleteConfirmModal />
         </div>
       </ConnectedRouter>
     </ReactReduxFirebaseProvider>

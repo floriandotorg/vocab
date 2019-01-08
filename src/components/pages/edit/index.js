@@ -17,8 +17,18 @@ import Row from './row'
   })
 )
 export default class Index extends Component {
-  deleteVocab = id => () => {
-    this.props.firebase.remove(`vocabs/${id}`);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      search: '',
+    };
+  }
+
+  search = event => {
+    this.setState({
+      search: event.target.value,
+    })
   }
 
   editVocab = (id, vocab) => () => {
@@ -26,7 +36,13 @@ export default class Index extends Component {
   }
 
   render() {
-    const { vocabs, firebase } = this.props;
+    const { firebase, vocabs } = this.props;
+    const search = this.state.search.trim().toLowerCase();
+    let filteredVocabs = (vocabs || []).slice().reverse();
+
+    if (search.length > 1) {
+      filteredVocabs = filteredVocabs.filter(v => v.value.lang1.trim().toLowerCase().includes(search) || v.value.lang2.trim().toLowerCase().includes(search));
+    }
 
     if (!isLoaded(vocabs)) {
       return (
@@ -38,26 +54,32 @@ export default class Index extends Component {
       )
     } else {
       return (
-        <div className="container">
+        <div className="container pt-4">
           <div className="row">
             <div className="col">
-              <table className="table table-striped table-hover mt-4">
+              <div className="input-group">
+                <input type="text" className="form-control" placeholder="Search" value={this.state.search} onChange={this.search} />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col">
+              <table className="table table-striped table-hover vocab-table mt-3">
                 <thead>
                   <tr>
-                    <th scope="col" style={{width: '5%'}}>Lv.</th>
-                    <th scope="col" style={{width: '45%'}}>Deutsch</th>
-                    <th scope="col" style={{width: '45%'}}>Portugiesisch</th>
-                    <th scope="col" style={{width: '5%'}}></th>
+                    <th scope="col">Lv.</th>
+                    <th scope="col">Deutsch</th>
+                    <th scope="col">Portugiesisch</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {vocabs.reverse().map(({ value, key }, ind) => (
+                  {filteredVocabs.map(({ value, key }, ind) => (
                     <Row
                       key={`${key}-${ind}`}
                       id={key}
                       vocab={value}
                       onEdit={this.editVocab(key, value)}
-                      onDelete={this.deleteVocab(key)}
                     />
                   ))}
                 </tbody>

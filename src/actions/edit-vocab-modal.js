@@ -3,7 +3,7 @@ import {
   handleActions,
 } from 'redux-actions'
 
-const defaultState = { show: false };
+const defaultState = {};
 
 export const {
   editVocabModalShow,

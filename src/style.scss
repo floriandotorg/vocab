@@ -47,3 +47,24 @@ button:focus {
     width: 100% !important;
   }
 }
+
+.vocab-table {
+  table-layout: fixed;
+  width: 100%;
+
+  tr {
+    th,
+    td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:first-child {
+        width: 5%;
+
+        @include media-breakpoint-down(sm) {
+          display: none;
+        }
+      }
+    }
+  }
+}

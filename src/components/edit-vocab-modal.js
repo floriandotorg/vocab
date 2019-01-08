@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { withFirebase } from 'react-redux-firebase'
 import Speak from './speak'
 import {
+  deleteConfirmModalShow,
+} from '../actions/delete-confirm-modal'
+import {
   editVocabModalHide,
   editVocabModalSetVocab,
 } from '../actions/edit-vocab-modal'
@@ -19,6 +22,7 @@ import {
   dispatch => ({
     editVocabModalHide: () => dispatch(editVocabModalHide()),
     editVocabModalSetVocab: vocab => dispatch(editVocabModalSetVocab(vocab)),
+    deleteConfirmModalShow: (id, vocab) => dispatch(deleteConfirmModalShow(id, vocab)),
   })
 )
 export default class EditVocabModal extends Component {
@@ -29,11 +33,20 @@ export default class EditVocabModal extends Component {
   save = event => {
     const { firebase, id, vocab, editVocabModalHide } = this.props;
 
-    firebase.set(`vocabs/${id}`, vocab);
+    firebase.set(`vocabs/${id}`, {
+      ...vocab,
+      lang1: vocab.lang1.trim(),
+      lang2: vocab.lang2.trim(),
+    });
 
     editVocabModalHide();
 
     event.preventDefault();
+  }
+
+  deleteVocab = () => {
+    const { id, vocab, editVocabModalHide, deleteConfirmModalShow } = this.props;
+    deleteConfirmModalShow(id, vocab);
   }
 
   lang1Change = event => {
@@ -98,6 +111,7 @@ export default class EditVocabModal extends Component {
             </div>}
           </div>
           <div className="modal-footer">
+            <button className="btn btn-danger mr-auto" onClick={this.deleteVocab}>Delete</button>
             <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
             <button className="btn btn-primary">Save</button>
           </div>

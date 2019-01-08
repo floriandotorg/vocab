@@ -43,8 +43,8 @@ export default class AddVocabModal extends Component {
   addVocab = event => {
     this.props.firebase.push('vocabs', {
       level: 0,
-      lang1: this.props.lang1,
-      lang2: this.props.lang2,
+      lang1: this.props.lang1.trim(),
+      lang2: this.props.lang2.trim(),
     });
 
     this.props.addVocabModalClear();

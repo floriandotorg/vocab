@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({vocab, onEdit, onDelete}) => (
+export default ({vocab, onEdit}) => (
   <tr>
     <td
       style={{ cursor: 'pointer' }}
@@ -21,15 +21,6 @@ export default ({vocab, onEdit, onDelete}) => (
       onClick={onEdit}
     >
       {vocab.lang2}
-    </td>
-
-    <td>
-      <button
-        className="delete-button"
-        onDoubleClick={onDelete}
-      >
-        &times;
-      </button>
     </td>
   </tr>
 )
