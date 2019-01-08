@@ -1,0 +1,14 @@
+import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
+import { firebaseStateReducer as firebase } from 'react-redux-firebase'
+import { reducer as addVocabModal } from './actions/add-vocab-modal'
+import { reducer as editVocabModal } from './actions/edit-vocab-modal'
+import { reducer as learning } from './actions/learning'
+
+export default history => combineReducers({
+  firebase,
+  router: connectRouter(history),
+  addVocabModal,
+  editVocabModal,
+  learning,
+})

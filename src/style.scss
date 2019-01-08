@@ -1,0 +1,49 @@
+@import "~bootstrap/scss/bootstrap";
+
+.delete-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+.vocab-card {
+  background: #eee;
+  height: 250px;
+  cursor: pointer;
+  position: relative;
+
+  > p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.learning-start-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  > li {
+    > button {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.flex-basis-0 {
+  flex-basis: 0;
+}
+
+@include media-breakpoint-down(md) {
+  .w-md-100 {
+    width: 100% !important;
+  }
+}
