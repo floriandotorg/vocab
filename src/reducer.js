@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
-import { firebaseStateReducer as firebase } from 'react-redux-firebase'
+import { firebaseReducer as firebase } from 'react-redux-firebase'
 import { reducer as addVocabModal } from './actions/add-vocab-modal'
 import { reducer as editVocabModal } from './actions/edit-vocab-modal'
 import { reducer as deleteConfirmModal } from './actions/delete-confirm-modal'

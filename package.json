@@ -1,73 +1,39 @@
 {
-  "name": "speech",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-proposal-decorators": "^7.2.3",
-    "@babel/preset-react": "^7.0.0",
-    "autoprefixer": "^9.4.3",
-    "babel-loader": "^8.0.4",
-    "clean-webpack-plugin": "^1.0.0",
-    "css-loader": "^2.1.0",
-    "html-webpack-harddisk-plugin": "^1.0.1",
-    "html-webpack-plugin": "^3.2.0",
-    "node-sass": "^4.10.0",
-    "postcss-loader": "^3.0.0",
-    "precss": "^4.0.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "webpack-merge": "^4.1.5"
-  },
+  "name": "vocab",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@firebase/app-types": "^0.3.2",
-    "bootstrap": "^4.2.1",
-    "connected-react-router": "^6.0.0",
-    "firebase": "^5.7.1",
-    "history": "^4.7.2",
-    "jquery": "^3.3.1",
-    "lodash": "^4.17.11",
-    "popper.js": "^1.14.6",
-    "react": "^16.6.3",
-    "react-bootstrap4-modal": "^1.7.0",
-    "react-dom": "^16.6.3",
-    "react-hot-loader": "^4.6.3",
-    "react-redux": "file:/Users/florian/Downloads/react-redux",
-    "react-redux-firebase": "^3.0.0-alpha.3",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.1",
-    "redux-actions": "^2.6.4",
-    "redux-devtools-extension": "^2.13.7"
+    "bootstrap": "^4.4.1",
+    "connected-react-router": "^6.6.1",
+    "firebase": "^7.5.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "react-redux-firebase": "^3.0.5",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.3.0",
+    "reactstrap": "^8.2.0",
+    "redux": "^4.0.4",
+    "redux-actions": "^2.6.5"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "deploy": "yarn build && firebase deploy"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "npm run build && firebase deploy"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "react-hot-loader/babel",
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ]
-    ]
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 ios_saf version"
+  ],
+  "devDependencies": {
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0"
+  },
+  "peerDependencies": {
+    "firebase-tools": "^7.9.0"
   }
 }

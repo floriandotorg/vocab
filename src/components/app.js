@@ -1,22 +1,45 @@
-import 'bootstrap'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import { hot } from 'react-hot-loader/root'
-import Routes from './routes'
-import Navigation from './navigation'
-import AddVocabModal from './add-vocab-modal'
-import EditVocabModal from './edit-vocab-modal'
-import DeleteConfirmModal from './delete-confirm-modal'
-import '../style.scss'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
+import { createBrowserHistory } from 'history'
+import { compose, createStore, applyMiddleware } from 'redux'
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
+import { firebase as fbConfig, reduxFirebase as rfConfig } from '../config'
+import createRootReducer from '../reducer'
+import { Navigation } from './navigation'
+import { Routes } from './routes'
+import { AddVocabModal } from './add-vocab-modal'
+import { EditVocabModal } from './edit-vocab-modal'
+import { DeleteConfirmModal } from './delete-confirm-modal'
 
-export default hot(({ store, firebase, rfConfig, history }) => (
+const history = createBrowserHistory()
+
+firebase.initializeApp(fbConfig)
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const store = createStore(
+  createRootReducer(history),
+  {},
+  composeEnhancers(
+    applyMiddleware(
+      routerMiddleware(history),
+    )
+  )
+)
+
+const rrfProps = {
+  firebase,
+  config: rfConfig,
+  dispatch: store.dispatch,
+}
+
+export const App = () =>
   <Provider store={store}>
-    <ReactReduxFirebaseProvider
-      firebase={firebase}
-      config={rfConfig}
-      dispatch={store.dispatch}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
       <ConnectedRouter history={history}>
         <div className="pt-5">
           <Navigation />
@@ -29,4 +52,3 @@ export default hot(({ store, firebase, rfConfig, history }) => (
       </ConnectedRouter>
     </ReactReduxFirebaseProvider>
   </Provider>
-));

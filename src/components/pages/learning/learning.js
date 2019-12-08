@@ -1,19 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withFirebase, firebaseConnect, getVal } from 'react-redux-firebase'
-import Card from './card'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Card } from './card'
 
-@connect(
-  state => ({
-    currentVocabId: state.learning.vocabs[state.learning.currentVocab],
-  })
-)
-export default class Learning extends Component {
-  render() {
-    const { currentVocabId } = this.props;
+export const Learning = () => {
+  const currentVocabId = useSelector(state => state.learning.vocabs[state.learning.currentVocab])
 
-    return (
-      <Card vocabId={currentVocabId} />
-    )
-  }
+  return (
+    <Card vocabId={currentVocabId} />
+  )
 }

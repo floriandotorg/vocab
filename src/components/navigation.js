@@ -1,66 +1,40 @@
-import $ from 'jquery'
-import React, { Component } from 'react'
-import { withRouter } from 'react-router'
-import { Route, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import {
+  Form,
+  Button,
+  Collapse,
+  Nav,
+  Navbar,
+  NavItem,
+  NavbarToggler,
+} from 'reactstrap'
 import { addVocabModalShow } from '../actions/add-vocab-modal'
 
-const NavbarLink = withRouter(({ to, exact, onClick, children }) => (
-  <Route
-    path={to}
-    exact={exact}
-    children={({ match }) => (
-      <li className={`nav-item ${match && 'active'}`} >
-        <Link className="nav-link" to={to} onClick={onClick}>{children}</Link>
-      </li>
-    )}
-  />
-));
+export const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch()
 
-@connect(
-  null,
-  dispatch => ({
-   addVocabModalShow: () => dispatch(addVocabModalShow()),
-  })
-)
-export default class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.collapse = React.createRef();
-  }
+  return (
+    <Navbar color="light" fixed="top" light expand="md">
+      <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
-  hide = () => {
-    $(this.collapse.current).collapse('hide');
-  }
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="mr-auto" navbar>
+          <NavItem>
+            <NavLink to="/" exact={true} className="nav-link" activeClassName="active" onClick={() => setIsOpen(false)}>Vokabelliste</NavLink>
+          </NavItem>
 
-  render() {
-    const { addVocabModalShow } = this.props;
+          <NavItem>
+            <NavLink to="/learn" className="nav-link" activeClassName="active" onClick={() => setIsOpen(false)}>Lernen</NavLink>
+          </NavItem>
+        </Nav>
 
-    return (
-      <div className="row">
-        <div className="col">
-          <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <form className="form-inline d-lg-none">
-              <button className="btn btn-primary" type="button" onClick={addVocabModalShow}>+ Hinzufügen</button>
-            </form>
-
-            <div className="collapse navbar-collapse" id="navbarSupportedContent" ref={this.collapse}>
-              <ul className="navbar-nav mr-auto">
-                <NavbarLink exact={true} to="/" onClick={this.hide}>Vokabelliste</NavbarLink>
-                <NavbarLink to="/learn" onClick={this.hide}>Lernen</NavbarLink>
-              </ul>
-
-              <form className="form-inline d-none d-lg-block">
-                <button className="btn btn-primary" type="button" onClick={addVocabModalShow}>+ Hinzufügen</button>
-              </form>
-            </div>
-          </nav>
-        </div>
-      </div>
-    )
-  }
+        <Form inline className="my-2 my-lg-0">
+          <Button color="primary" onClick={() => dispatch(addVocabModalShow())}>+ Hinzufügen</Button>
+        </Form>
+      </Collapse>
+    </Navbar>
+  )
 }

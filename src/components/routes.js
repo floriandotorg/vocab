@@ -1,11 +1,11 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Edit from './pages/edit/index'
-import Learn from './pages/learning/index'
+import { Edit } from './pages/edit/index'
+import { Learn } from './pages/learning/index'
 
-export default () => (
+export const Routes = () => (
   <Switch>
     <Route exact path="/" component={Edit} />
     <Route path="/learn" component={Learn} />
   </Switch>
-);
+)

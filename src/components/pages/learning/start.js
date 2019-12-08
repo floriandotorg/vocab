@@ -1,7 +1,13 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React from 'react'
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+} from 'reactstrap'
 
-const Row = ({ level, num, onStart }) => {
+const ButtonRow = ({ level, num, onStart }) => {
   const mapColor = {
     0: 'primary',
     1: 'success',
@@ -12,34 +18,32 @@ const Row = ({ level, num, onStart }) => {
 
   return (
     <li>
-      <button className={`btn btn-${mapColor[level]} btn-small`} onClick={onStart}>
+      <Button color={mapColor[level]} size='small' onClick={onStart}>
         Level {parseInt(level) + 1}: {num} words
-      </button>
+      </Button>
     </li>
-  );
-};
+  )
+}
 
-export default class Start extends Component {
-  render() {
-    const levels = _(this.props.vocabs).groupBy('value.level').mapValues('length');
+export const Start = ({ vocabs, onStart }) => {
+  const levels = _(vocabs).groupBy('value.level').mapValues('length')
 
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <ul className="learning-start-list">
-              {levels.map((num, level) =>
-                <Row
-                  key={level}
-                  level={level}
-                  num={num}
-                  onStart={this.props.onStart(parseInt(level))}
-                />
-              ).value()}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <ul className="learning-start-list">
+            {levels.map((num, level) =>
+              <ButtonRow
+                key={level}
+                level={level}
+                num={num}
+                onStart={onStart(parseInt(level))}
+              />
+            ).value()}
+          </ul>
+        </Col>
+      </Row>
+    </Container>
+  )
 }
