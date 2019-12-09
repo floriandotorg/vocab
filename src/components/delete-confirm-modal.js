@@ -8,7 +8,7 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
-import { editVocabModalShow } from '../actions/edit-vocab-modal'
+import { editVocabModalHide } from '../actions/edit-vocab-modal'
 import { deleteConfirmModalHide } from '../actions/delete-confirm-modal'
 
 export const DeleteConfirmModal = () => {
@@ -21,12 +21,12 @@ export const DeleteConfirmModal = () => {
 
   const closeModal = () => {
     dispatch(deleteConfirmModalHide())
-    dispatch(editVocabModalShow(id, vocab))
   }
 
   const deleteVocab = () => {
     firebase.remove(`vocabs/${id}`)
     dispatch(deleteConfirmModalHide())
+    dispatch(editVocabModalHide())
   }
 
   return (

@@ -13,4 +13,4 @@ export const reduxFirebase = {
   enableLogging: false
 }
 
-export const ispeech = '';
+export const ispeech = ''

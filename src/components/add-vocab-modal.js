@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react'
+import _ from 'lodash'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFirebase } from 'react-redux-firebase'
 import {
@@ -19,6 +20,7 @@ import {
   addVocabModalSetLang2,
   addVocabModalClear,
 } from '../actions/add-vocab-modal'
+import { mightBeDuplicate } from '../similarity-cache'
 
 export const AddVocabModal = () => {
   const lang1Ref = useRef()
@@ -29,16 +31,16 @@ export const AddVocabModal = () => {
     lang1,
     lang2,
   } = useSelector(state => state.addVocabModal)
-
-  useEffect(() => {
-    setTimeout(() => lang1Ref.current && lang1Ref.current.focus())
-  }, [modalOpen])
+  const [isDuplicate, setIsDuplicate] = useState(false)
+  const checkDuplicate = useRef(_.debounce(text => setIsDuplicate(mightBeDuplicate(text)), 200)).current
 
   const closeModal = () => {
     dispatch(addVocabModalHide())
   }
 
   const addVocab = event => {
+    event.preventDefault()
+
     firebase.push('vocabs', {
       level: 0,
       lang1: lang1.trim(),
@@ -47,11 +49,10 @@ export const AddVocabModal = () => {
 
     dispatch(addVocabModalClear())
     lang1Ref.current.focus()
-
-    event.preventDefault()
   }
 
   const lang1Change = event => {
+    checkDuplicate(event.target.value)
     dispatch(addVocabModalSetLang1(event.target.value))
   }
 
@@ -62,13 +63,14 @@ export const AddVocabModal = () => {
   return (
     <Modal
       isOpen={modalOpen}
+      autoFocus={false}
     >
       <Form onSubmit={addVocab}>
         <ModalHeader toggle={closeModal}>Add Vocab</ModalHeader>
         <ModalBody>
           <FormGroup>
             <Label for='portguese'>Portugisisch:</Label>
-            <Input type='textarea' id='portguese' value={lang1} onChange={lang1Change} ref={lang1Ref} required />
+            <Input type='textarea' id='portguese' invalid={isDuplicate} value={lang1} onChange={lang1Change} innerRef={lang1Ref} autoFocus required />
             <div className='d-flex mt-2'>
               <Speak word={lang1} />
             </div>

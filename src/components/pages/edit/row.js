@@ -1,7 +1,8 @@
 import React from 'react'
+import classNames from 'classnames'
 
-export const Row = ({vocab, onEdit}) => (
-  <tr>
+export const Row = ({ id, vocab, onEdit }) => (
+  <tr className={classNames({'table-danger': vocab.duplicateRating > .9})}>
     <td
       style={{ cursor: 'pointer' }}
       onClick={onEdit}
