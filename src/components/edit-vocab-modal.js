@@ -37,7 +37,7 @@ export const  EditVocabModal = () => {
 
   const save = event => {
     firebase.set(`vocabs/${id}`, {
-      ...vocab,
+      level: vocab.level,
       lang1: vocab.lang1.trim(),
       lang2: vocab.lang2.trim(),
     })

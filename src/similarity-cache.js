@@ -6,10 +6,12 @@ let cache = {}
 let vocabs = []
 let callback
 
+const sanitize = t => t.toLowerCase().replace(/^([^\n]+)\n+.*/, '$1')
+
 const filter = key => _.flow([
   fp.reject({key}),
   fp.map('value.lang1'),
-  fp.map(t => t.replace(/^(.*)\n.*/, '$1'))
+  fp.map(t => sanitize(t)),
 ])
 
 const worker = new Worker('worker.js')
@@ -18,7 +20,7 @@ worker.addEventListener('message', (e) => {
   callback(e.data)
 }, false)
 
-const getRating = (lang1, key) => findBestMatch(lang1, filter(key)(vocabs)).bestMatch.rating
+const getRating = (lang1, key) => findBestMatch(sanitize(lang1), filter(key)(vocabs)).bestMatch.rating
 
 export const getSimilarity = vocab => cache[vocab.key]
 
@@ -32,4 +34,4 @@ export const setVocabs = (newVocabs, cb) => {
   worker.postMessage(newVocabs)
 }
 
-export const mightBeDuplicate = lang1 => getRating(lang1) > .8
+export const mightBeDuplicate = lang1 => getRating(lang1) > .9

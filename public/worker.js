@@ -63,10 +63,12 @@ function areArgsValid(mainString, targetStrings) {
   return true;
 }
 
+const sanitize = t => t.toLowerCase().replace(/^([^\n]+)\n+.*/, '$1')
+
 self.addEventListener('message', e => {
   const result = {}
   e.data.forEach(vocab => {
-    result[vocab.key] = findBestMatch(vocab.value.lang1, e.data.filter(v => v.key !== vocab.key).map(vocab => vocab.value.lang1.replace(/^(.*)\n.*/, '$1'))).bestMatch.rating
+    result[vocab.key] = findBestMatch(sanitize(vocab.value.lang1), e.data.filter(v => v.key !== vocab.key).map(vocab => sanitize(vocab.value.lang1))).bestMatch.rating
   })
    
   self.postMessage(result)
