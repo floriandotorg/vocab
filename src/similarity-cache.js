@@ -6,7 +6,7 @@ let cache = {}
 let vocabs = []
 let callback
 
-const sanitize = t => t.toLowerCase().replace(/^([^\n]+)\n+.*/, '$1')
+const sanitize = t => t.toLowerCase().replace(/^([^\n]+)\n+.*/s, '$1').replace(/\(-[a-z]+\)/gi, '')
 
 const filter = key => _.flow([
   fp.reject({key}),
@@ -20,7 +20,10 @@ worker.addEventListener('message', (e) => {
   callback(e.data)
 }, false)
 
-const getRating = (lang1, key) => findBestMatch(sanitize(lang1), filter(key)(vocabs)).bestMatch.rating
+const getRating = (lang1, key) => {
+  console.log(filter(key)(vocabs).filter(t => t.startsWith('demorar')))
+  return findBestMatch(sanitize(lang1), filter(key)(vocabs)).bestMatch.rating
+}
 
 export const getSimilarity = vocab => cache[vocab.key]
 

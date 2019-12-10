@@ -63,7 +63,7 @@ function areArgsValid(mainString, targetStrings) {
   return true;
 }
 
-const sanitize = t => t.toLowerCase().replace(/^([^\n]+)\n+.*/, '$1')
+const sanitize = t => t.toLowerCase().replace(/^([^\n]+)\n+.*/s, '$1').replace(/\(-[a-z]+\)/gi, '')
 
 self.addEventListener('message', e => {
   const result = {}
