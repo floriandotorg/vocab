@@ -3,9 +3,8 @@ import { Provider } from 'react-redux'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
-import { createBrowserHistory } from 'history'
 import { compose, createStore, applyMiddleware } from 'redux'
-import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
+import { BrowserRouter as Router } from "react-router-dom";
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
 import { firebase as fbConfig, reduxFirebase as rfConfig } from '../config'
 import createRootReducer from '../reducer'
@@ -15,8 +14,6 @@ import { Routes } from './routes'
 import { AddVocabModal } from './add-vocab-modal'
 import { EditVocabModal } from './edit-vocab-modal'
 import { DeleteConfirmModal } from './delete-confirm-modal'
-
-const history = createBrowserHistory()
 
 firebase.initializeApp(fbConfig)
 
@@ -41,11 +38,10 @@ const cacheMiddleware = store => next => action => {
 }
 
 const store = createStore(
-  createRootReducer(history),
+  createRootReducer(),
   {},
   composeEnhancers(
     applyMiddleware(
-      routerMiddleware(history),
       cacheMiddleware,
     )
   )
@@ -60,7 +56,7 @@ const rrfProps = {
 export const App = () =>
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <ConnectedRouter history={history}>
+      <Router>
         <div className="pt-5">
           <Navigation />
           <Routes />
@@ -69,6 +65,6 @@ export const App = () =>
           <EditVocabModal />
           <DeleteConfirmModal />
         </div>
-      </ConnectedRouter>
+      </Router>
     </ReactReduxFirebaseProvider>
   </Provider>
