@@ -27,8 +27,7 @@ export const  EditVocabModal = () => {
   const firebase = useFirebase()
   const {
     id,
-    vocab,
-    editLevel
+    vocab
   } = useSelector(state => state.editVocabModal)
 
   const closeModal = () => {
@@ -91,11 +90,6 @@ export const  EditVocabModal = () => {
             <Label for='german'>Deutsch:</Label>
             <Input type='textarea' id='german' value={vocab.lang2} onChange={lang2Change} required />
           </FormGroup>
-
-          {editLevel && <FormGroup>
-            <Label for='level'>Level:</Label>
-            <Input type='number' id='level' step='1' value={vocab.level} onChange={levelChange} required />
-          </FormGroup>}
         </ModalBody>
         <ModalFooter>
           <Button color='danger' className='mr-auto' onClick={deleteVocab}>Delete</Button>

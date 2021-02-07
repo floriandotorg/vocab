@@ -25,4 +25,4 @@ yarn-error.log*
 .firebase
 src/config.js
 
-old
+*export.json

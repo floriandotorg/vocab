@@ -7,13 +7,6 @@ export const Row = ({ id, vocab, onEdit }) => (
       style={{ cursor: 'pointer' }}
       onClick={onEdit}
     >
-      {vocab.level}
-    </td>
-
-    <td
-      style={{ cursor: 'pointer' }}
-      onClick={onEdit}
-    >
       {vocab.lang1}
     </td>
 

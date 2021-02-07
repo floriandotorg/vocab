@@ -10,7 +10,7 @@ export const {
   editVocabModalHide,
   editVocabModalSetVocab,
 } = createActions({
-  EDIT_VOCAB_MODAL_SHOW: (id, vocab, editLevel = true) => ({ id, vocab, editLevel }),
+  EDIT_VOCAB_MODAL_SHOW: (id, vocab) => ({ id, vocab }),
   EDIT_VOCAB_MODAL_HIDE: () => {},
   EDIT_VOCAB_MODAL_SET_VOCAB: (vocab) => ({ vocab }),
 });
@@ -19,17 +19,16 @@ export const reducer = handleActions(
   {
     [editVocabModalShow]: (
       state,
-      { payload: { id, vocab, editLevel } }
+      { payload: { id, vocab } }
     ) => ({
       ...state,
       id,
-      vocab,
-      editLevel,
+      vocab
     }),
     [editVocabModalHide]: (
       state,
     ) => {
-      const { id, vocab, editLevel, ...newstate } = state;
+      const { id, vocab, ...newstate } = state;
       return newstate;
     },
     [editVocabModalSetVocab]: (

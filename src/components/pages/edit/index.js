@@ -51,7 +51,6 @@ export const Edit = () => {
             <Table striped hover className='vocab-table mt-3'>
               <thead>
                 <tr>
-                  <th scope='col'>Lv.</th>
                   <th scope='col'>Deutsch</th>
                   <th scope='col'>Portugiesisch</th>
                 </tr>
