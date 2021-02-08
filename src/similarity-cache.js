@@ -21,7 +21,6 @@ worker.addEventListener('message', (e) => {
 }, false)
 
 const getRating = (lang1, key) => {
-  console.log(filter(key)(vocabs).filter(t => t.startsWith('demorar')))
   return findBestMatch(sanitize(lang1), filter(key)(vocabs)).bestMatch.rating
 }
 

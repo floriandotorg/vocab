@@ -36,7 +36,7 @@ export const  EditVocabModal = () => {
 
   const save = event => {
     firebase.set(`vocabs/${id}`, {
-      level: vocab.level,
+      ...vocab,
       lang1: vocab.lang1.trim(),
       lang2: vocab.lang2.trim(),
     })
@@ -64,13 +64,6 @@ export const  EditVocabModal = () => {
     }))
   }
 
-  const levelChange = event => {
-    dispatch(editVocabModalSetVocab({
-      ...vocab,
-      level: parseInt(event.target.value),
-    }))
-  }
-
   return (
     <Modal
       isOpen={!!vocab}
@@ -90,6 +83,8 @@ export const  EditVocabModal = () => {
             <Label for='german'>Deutsch:</Label>
             <Input type='textarea' id='german' value={vocab.lang2} onChange={lang2Change} required />
           </FormGroup>
+
+          <p className="text-muted"><small>Countdown: {vocab.countdown} / Proficiency: {vocab.proficiency}</small></p>
         </ModalBody>
         <ModalFooter>
           <Button color='danger' className='mr-auto' onClick={deleteVocab}>Delete</Button>

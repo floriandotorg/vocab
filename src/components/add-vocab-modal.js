@@ -42,7 +42,8 @@ export const AddVocabModal = () => {
     event.preventDefault()
 
     firebase.push('vocabs', {
-      level: 0,
+      countdown: 1,
+      proficiency: 0,
       lang1: lang1.trim(),
       lang2: lang2.trim(),
     })
