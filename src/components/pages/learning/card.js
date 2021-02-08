@@ -69,6 +69,8 @@ export const Card = ({ vocab }) => {
     const num = parseInt(key)
     if (num > 0 && num < 6) {
       next(num)()
+    } else if (key === 'ArrowUp') {
+      dispatch(learningTurnCard())
     }
   }
 
